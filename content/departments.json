@@ -1,3 +1,9 @@
 {
-  "departments": []
+  "departments": [
+    {
+      "name": "စီမံရေးရာဌာန",
+      "head_name": "ဦးဆန်းထွန်းလင်း",
+      "head_title": "ညွှန်ကြားရေးမှူး"
+    }
+  ]
 }
