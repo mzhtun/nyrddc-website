@@ -275,6 +275,35 @@
       @media (max-width:1020px){ .prog-grid{grid-template-columns:repeat(2,1fr)} }
       @media (max-width:560px){ .prog-grid{grid-template-columns:1fr} }
 
+      /* departments */
+      .dept-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+      .dept{
+        background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+        overflow:hidden;display:flex;flex-direction:column;
+      }
+      .dept-photo{aspect-ratio:4/3;width:100%;object-fit:cover;background:var(--green-100)}
+      .dept-photo-ph{
+        aspect-ratio:4/3;width:100%;display:grid;place-items:center;
+        background:var(--green-100);color:var(--green-800);
+      }
+      @media (prefers-color-scheme: dark){ .dept-photo-ph{color:#a9dcc2} }
+      .dept-body{padding:20px 22px 24px;display:flex;flex-direction:column;gap:6px}
+      .dept-body h3{font-size:1.1rem}
+      .dept-head{display:flex;align-items:center;gap:9px;color:var(--muted);font-size:.95rem;margin-top:2px}
+      .dept-head .ic{
+        flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;
+        background:var(--gold-soft);color:#6d5205;
+      }
+      @media (prefers-color-scheme: dark){ .dept-head .ic{color:var(--gold-pale)} }
+      .dept-head strong{color:var(--ink)}
+      .dept-head .role{font-weight:700;color:var(--gold);white-space:nowrap}
+      .dept-empty{
+        border:1px dashed var(--line);border-radius:var(--radius);padding:30px 26px;
+        color:var(--muted);background:var(--surface);text-align:center;
+      }
+      @media (max-width:1020px){ .dept-grid{grid-template-columns:repeat(2,1fr)} }
+      @media (max-width:560px){ .dept-grid{grid-template-columns:1fr} }
+
       /* admissions */
       .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;counter-reset:step}
       .step{
@@ -417,6 +446,7 @@
             <li><a href="#home">ပင်မ</a></li>
             <li><a href="#about">ကောလိပ်အကြောင်း</a></li>
             <li><a href="#programs">သင်တန်းများ</a></li>
+            <li><a href="#departments">ဌာနများ</a></li>
             <li><a href="#admissions">ဝင်ခွင့်</a></li>
             <li><a href="#news">သတင်းများ</a></li>
             <li><a href="#contact">ဆက်သွယ်ရန်</a></li>
@@ -551,6 +581,21 @@
               </div>
               <div class="tag"><span>ဒီပလိုမာ သင်တန်း</span></div>
             </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- DEPARTMENTS -->
+      <section id="departments">
+        <div class="wrap">
+          <div class="sec-head reveal">
+            <span class="kicker">ဌာနများ</span>
+            <h2>သင်ကြားရေးဌာနများ</h2>
+            <p>ကောလိပ်၏ သင်ကြားရေးဌာနများနှင့် ဌာနမှူးများ စာရင်း ဖြစ်ပါသည်။</p>
+          </div>
+          <div class="dept-grid" id="deptGrid" hidden></div>
+          <div class="dept-empty" id="deptEmpty">
+            <p style="margin:0">ဌာနစာရင်းကို မကြာမီ ဖော်ပြပေးပါမည်။</p>
           </div>
         </div>
       </section>
@@ -691,6 +736,7 @@
             <ul>
               <li><a href="#about">ကောလိပ်အကြောင်း</a></li>
               <li><a href="#programs">သင်တန်းများ</a></li>
+              <li><a href="#departments">ဌာနများ</a></li>
               <li><a href="#admissions">ဝင်ခွင့်</a></li>
               <li><a href="#news">သတင်းများ</a></li>
             </ul>
@@ -917,6 +963,97 @@
           fill("agti", data.agti_subjects || data.agti || p.agti_subjects || p.agti);
         }
         fetch("content/programs.json", { headers: { "Accept": "application/json" } })
+          .then(function(r){ if (!r.ok) throw new Error("x"); return r.json(); })
+          .then(apply)
+          .catch(function(){
+            return fetch(RAW).then(function(r){ if (!r.ok) throw new Error("x"); return r.json(); }).then(apply);
+          })
+          .catch(function(){});
+      })();
+    </script>
+    <script>
+      // ---- Departments wiring: Decap CMS (content/departments.json) -> ဌာန ကတ်များ ----
+      // ဌာန၊ ဌာနမှူးအမည်နှင့် ဌာနမှူး ဓာတ်ပုံကို Admin (/admin/) မှသာ ထည့်/ပြင် နိုင်သည်။
+      // မျှော်လင့်ထားသော ပုံစံ:
+      // { "departments": [ { "name": "ဌာနအမည်", "head_name": "ဌာနမှူး အမည်",
+      //                      "head_title": "ရာထူး (ရွေးချယ်နိုင်)", "photo": "ဓာတ်ပုံ လမ်းကြောင်း/URL" } ] }
+      // ဖိုင် မရှိသေး (သို့) စာရင်း အလွတ် ဖြစ်ပါက "မကြာမီ ဖော်ပြမည်" မှတ်ချက်ကိုသာ ပြသည်။
+      (function(){
+        if (!window.fetch) return;
+        var RAW = "https://raw.githubusercontent.com/mzhtun/nyrddc-website/main/content/departments.json";
+        var PERSON = '<svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c1.2-3.4 3.8-5 7-5s5.8 1.6 7 5"/></svg>';
+        var PERSON_SM = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c1.2-3.4 3.8-5 7-5s5.8 1.6 7 5"/></svg>';
+        function normalize(item){
+          if (!item) return null;
+          var name = item.name || item.department || item.title || "";
+          if (!name) return null;
+          return {
+            name: String(name),
+            head: String(item.head_name || item.head || ""),
+            headTitle: String(item.head_title || item.head_role || ""),
+            photo: String(item.photo || item.head_photo || item.image || "")
+          };
+        }
+        function render(items){
+          items = (items || []).map(normalize).filter(Boolean);
+          if (!items.length) return;
+          var grid = document.getElementById("deptGrid");
+          var empty = document.getElementById("deptEmpty");
+          if (!grid) return;
+          grid.innerHTML = "";
+          items.forEach(function(d){
+            var card = document.createElement("article");
+            card.className = "dept";
+            if (d.photo){
+              var img = document.createElement("img");
+              img.className = "dept-photo";
+              img.src = d.photo;
+              img.alt = d.head ? (d.name + " ဌာနမှူး " + d.head + " ၏ ဓာတ်ပုံ") : (d.name + " ဌာန ဓာတ်ပုံ");
+              img.loading = "lazy";
+              card.appendChild(img);
+            } else {
+              var ph = document.createElement("div");
+              ph.className = "dept-photo-ph";
+              ph.setAttribute("aria-hidden", "true");
+              ph.innerHTML = PERSON;
+              card.appendChild(ph);
+            }
+            var body = document.createElement("div");
+            body.className = "dept-body";
+            var h3 = document.createElement("h3");
+            h3.textContent = d.name;
+            body.appendChild(h3);
+            if (d.head){
+              var head = document.createElement("div");
+              head.className = "dept-head";
+              var ic = document.createElement("span");
+              ic.className = "ic";
+              ic.setAttribute("aria-hidden", "true");
+              ic.innerHTML = PERSON_SM;
+              head.appendChild(ic);
+              var role = document.createElement("span");
+              role.className = "role";
+              role.textContent = d.headTitle || "ဌာနမှူး";
+              head.appendChild(role);
+              var strong = document.createElement("strong");
+              strong.textContent = d.head;
+              head.appendChild(strong);
+              body.appendChild(head);
+            }
+            card.appendChild(body);
+            grid.appendChild(card);
+          });
+          if (grid.children.length){
+            grid.hidden = false;
+            if (empty) empty.hidden = true;
+          }
+        }
+        function apply(data){
+          if (!data) return;
+          var arr = Array.isArray(data) ? data : (data.departments || []);
+          render(arr);
+        }
+        fetch("content/departments.json", { headers: { "Accept": "application/json" } })
           .then(function(r){ if (!r.ok) throw new Error("x"); return r.json(); })
           .then(apply)
           .catch(function(){

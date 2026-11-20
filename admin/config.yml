@@ -53,3 +53,19 @@ collections:
           - { label: "ဝိဇ္ဇာ (B.A.) ဘာသာရပ်များ", name: "ba_subjects", widget: "list", field: { label: "ဘာသာရပ်", name: "subject", widget: "string" } }
           - { label: "သိပ္ပံ (B.Sc.) ဘာသာရပ်များ", name: "bsc_subjects", widget: "list", field: { label: "ဘာသာရပ်", name: "subject", widget: "string" } }
           - { label: "A.G.T.I. ဘာသာရပ်များ", name: "agti_subjects", widget: "list", field: { label: "ဘာသာရပ်", name: "subject", widget: "string" } }
+
+  - name: "departments"
+    label: "ဌာနများ"
+    files:
+      - label: "ဌာနစာရင်း"
+        name: "list"
+        file: "content/departments.json"
+        fields:
+          - label: "ဌာနများ"
+            name: "departments"
+            widget: "list"
+            fields:
+              - { label: "ဌာနအမည်", name: "name", widget: "string" }
+              - { label: "ဌာနမှူး အမည်", name: "head_name", widget: "string" }
+              - { label: "ဌာနမှူး ရာထူး", name: "head_title", widget: "string", required: false }
+              - { label: "ဌာနမှူး ဓာတ်ပုံ", name: "photo", widget: "image", required: false }
