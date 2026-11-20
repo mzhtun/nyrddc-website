@@ -1,5 +1,11 @@
 {
-  "ba_subjects": [],
-  "bsc_subjects": [],
-  "agti_subjects": []
+  "ba_subjects": [
+    "မြန်မာစာ"
+  ],
+  "bsc_subjects": [
+    "သင်္ချာ"
+  ],
+  "agti_subjects": [
+    "သုတနည်းပညာ"
+  ]
 }
