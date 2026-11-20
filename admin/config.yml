@@ -11,9 +11,9 @@ backend:
 publish_mode: editorial_workflow
 media_folder: "assets/uploads"
 public_folder: "/assets/uploads"
-# Netlify deploy ပြီးမှ ရလာသော URL ဖြင့် အစားထိုးပါ (ဥပမာ https://nyrddc-yangon.netlify.app)
-site_url: https://nyrddc-yangon.netlify.app
-display_url: https://nyrddc-yangon.netlify.app
+# Netlify deploy ပြီးမှ ရလာသော URL ဖြင့် အစားထိုးပါ (ဥပမာ https://nyrddc-website.netlify.app)
+site_url: https://nyrddc-website.netlify.app
+display_url: https://nyrddc-website.netlify.app
 logo_url: /assets/campus-main.jpg
 
 collections:
