@@ -1,0 +1,44 @@
+backend:
+  name: git-gateway
+  branch: main
+
+# GitHub တိုက်ရိုက် သုံးလိုပါက အထက်အစား:
+# backend:
+#   name: github
+#   repo: mzhtun/nyrddc-website
+#   branch: main
+
+publish_mode: editorial_workflow
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+# Netlify deploy ပြီးမှ ရလာသော URL ဖြင့် အစားထိုးပါ (ဥပမာ https://nyrddc-yangon.netlify.app)
+site_url: https://nyrddc-yangon.netlify.app
+display_url: https://nyrddc-yangon.netlify.app
+logo_url: /assets/campus-main.jpg
+
+collections:
+  - name: "news"
+    label: "သတင်းများ"
+    label_singular: "သတင်း"
+    folder: "content/news"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    editor: { preview: true }
+    fields:
+      - { label: "ခေါင်းစဉ်", name: "title", widget: "string" }
+      - { label: "ရက်စွဲ", name: "date", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "အကျဉ်းချုပ်", name: "excerpt", widget: "text", required: false }
+      - { label: "ပုံ", name: "image", widget: "image", required: false }
+      - { label: "Facebook Link", name: "link", widget: "string", required: false, default: "https://www.facebook.com/NYRDDCYGN" }
+      - { label: "အကြောင်းအရာ", name: "body", widget: "markdown" }
+
+  - name: "pages"
+    label: "စာမျက်နှာ ဆက်တင်များ"
+    files:
+      - label: "ပင်မ စာမျက်နှာ"
+        name: "home"
+        file: "content/home.json"
+        fields:
+          - { label: "Hero ခေါင်းစဉ်", name: "hero_title", widget: "string" }
+          - { label: "Hero အကျဉ်း", name: "hero_tag", widget: "text" }
+          - { label: "ဘွဲ့ရရှိသူ အရေအတွက်", name: "graduates", widget: "string", default: "၄,၀၀၇+" }
