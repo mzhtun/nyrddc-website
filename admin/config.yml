@@ -42,3 +42,14 @@ collections:
           - { label: "Hero ခေါင်းစဉ်", name: "hero_title", widget: "string" }
           - { label: "Hero အကျဉ်း", name: "hero_tag", widget: "text" }
           - { label: "ဘွဲ့ရရှိသူ အရေအတွက်", name: "graduates", widget: "string", default: "၄,၀၀၇+" }
+
+  - name: "programs"
+    label: "သင်တန်းများ၏ ဘာသာရပ်များ"
+    files:
+      - label: "ဘာသာရပ်များ"
+        name: "subjects"
+        file: "content/programs.json"
+        fields:
+          - { label: "ဝိဇ္ဇာ (B.A.) ဘာသာရပ်များ", name: "ba_subjects", widget: "list", field: { label: "ဘာသာရပ်", name: "subject", widget: "string" } }
+          - { label: "သိပ္ပံ (B.Sc.) ဘာသာရပ်များ", name: "bsc_subjects", widget: "list", field: { label: "ဘာသာရပ်", name: "subject", widget: "string" } }
+          - { label: "A.G.T.I. ဘာသာရပ်များ", name: "agti_subjects", widget: "list", field: { label: "ဘာသာရပ်", name: "subject", widget: "string" } }
