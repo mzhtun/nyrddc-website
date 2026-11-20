@@ -1,0 +1,24 @@
+# NYRDDC (Yangon) — Netlify deploy config
+# Repo: mzhtun/nyrddc-website · Static site, build step မလို
+[build]
+  publish = "."
+  command = ""
+
+# /admin -> /admin/ (Decap CMS)
+[[redirects]]
+  from = "/admin"
+  to = "/admin/"
+  status = 301
+  force = false
+
+# ပုံနှင့် font များကို cache ကြာကြာ ထားရန်
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
