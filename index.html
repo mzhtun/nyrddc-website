@@ -805,7 +805,8 @@
       // HTML ထဲ ရေးထားသော မူရင်း သတင်းများကိုပဲ ဆက်ပြသည် (fallback)။
       (function(){
         if (!window.fetch) return;
-        var REPO_API = "https://api.github.com/repos/mzhtun/nyrddc-website/contents/content/news";
+        var CDN = "https://cdn.jsdelivr.net/gh/mzhtun/nyrddc-website@main/";
+        var CDN_LIST = "https://data.jsdelivr.com/v1/package/gh/mzhtun/nyrddc-website@main/flat";
         var REPO_RAW = "https://raw.githubusercontent.com/mzhtun/nyrddc-website/main/";
         var FB = "https://www.facebook.com/NYRDDCYGN";
         var MM = ["၀","၁","၂","၃","၄","၅","၆","၇","၈","၉"];
@@ -897,21 +898,29 @@
               return true;
             });
         }
-        function tryGithub(){
-          return fetch(REPO_API, { headers: { "Accept": "application/vnd.github+json" } })
-            .then(function(r){ if (!r.ok) throw new Error("gh list"); return r.json(); })
-            .then(function(files){
-              var mds = (files || []).filter(function(f){ return f && /\.md$/i.test(f.name || "") && f.download_url; });
-              if (!mds.length) throw new Error("no md");
-              return Promise.all(mds.map(function(f){
-                return fetch(f.download_url).then(function(r){ return r.text(); })
-                  .then(function(t){ return normalize(parseFrontmatter(t)); })
+        function cdnImage(item){
+          if (item && item.image && !/^https?:\/\//i.test(item.image)){
+            item.image = CDN + String(item.image).replace(/^\//, "");
+          }
+          return item;
+        }
+        function tryJsdelivr(){
+          // သတင်းစာရင်းကို jsDelivr CDN မှ ဖတ်သည် — GitHub API ကဲ့သို့ rate limit မရှိပါ။
+          return fetch(CDN_LIST, { headers: { "Accept": "application/json" } })
+            .then(function(r){ if (!r.ok) throw new Error("cdn list"); return r.json(); })
+            .then(function(data){
+              var names = ((data && data.files) || []).map(function(f){ return String((f && f.name) || ""); })
+                .filter(function(n){ return /^\/content\/news\/[^/]+\.md$/i.test(n); });
+              if (!names.length) throw new Error("no md");
+              return Promise.all(names.map(function(n){
+                return fetch(CDN + n.replace(/^\//, "")).then(function(r){ if (!r.ok) throw new Error("md"); return r.text(); })
+                  .then(function(t){ return cdnImage(normalize(parseFrontmatter(t))); })
                   .catch(function(){ return null; });
               }));
             })
             .then(function(items){ renderNews(items || []); });
         }
-        tryLocalIndex().catch(function(){ return tryGithub(); }).catch(function(){ /* မူရင်း သတင်းများ ဆက်ပြသည် */ });
+        tryLocalIndex().catch(function(){ return tryJsdelivr(); }).catch(function(){ /* မူရင်း သတင်းများ ဆက်ပြသည် */ });
 
         // content/home.json → hero + stats (ရှိလျှင်သာ အစားထိုးသည်)
         function applyHome(data){
