@@ -69,3 +69,60 @@ collections:
               - { label: "ဌာနမှူး အမည်", name: "head_name", widget: "string" }
               - { label: "ဌာနမှူး ရာထူး", name: "head_title", widget: "string", required: false }
               - { label: "ဌာနမှူး ဓာတ်ပုံ", name: "photo", widget: "image", required: false }
+
+  - name: "principal"
+    label: "ကျောင်းအုပ်စကား"
+    files:
+      - label: "ကျောင်းအုပ်စကား"
+        name: "message"
+        file: "content/principal.json"
+        fields:
+          - { label: "ကျောင်းအုပ်စကား", name: "message", widget: "text" }
+          - { label: "ကျောင်းအုပ်ကြီး အမည်", name: "principal_name", widget: "string" }
+          - { label: "ရာထူး", name: "principal_title", widget: "string" }
+          - { label: "ဓာတ်ပုံ", name: "principal_photo", widget: "image", required: false }
+  - name: "staff"
+    label: "ဝန်ထမ်းစာရင်း"
+    files:
+      - label: "ဝန်ထမ်းစာရင်း"
+        name: "list"
+        file: "content/staff.json"
+        fields:
+          - label: "ဝန်ထမ်းများ"
+            name: "staff"
+            widget: "list"
+            fields:
+              - { label: "အမည်", name: "name", widget: "string" }
+              - { label: "ရာထူး", name: "role", widget: "string" }
+              - { label: "ဌာန", name: "department", widget: "string", required: false }
+              - { label: "ဓာတ်ပုံ", name: "photo", widget: "image", required: false }
+              - label: "အဖွဲ့"
+                name: "group"
+                widget: "select"
+                options:
+                  - { label: "ကောလိပ် ဦးဆောင်မှု", value: "leadership" }
+                  - { label: "ဌာနမှူးများ", value: "heads" }
+                default: "leadership"
+              - { label: "အစဉ်", name: "order", widget: "number", required: false }
+              - { label: "နမူနာ", name: "is_sample", widget: "boolean", required: false }
+  - name: "eligibility"
+    label: "ဝင်ခွင့် အရည်အချင်း သတ်မှတ်ချက်များ"
+    files:
+      - label: "အရည်အချင်း သတ်မှတ်ချက်များ"
+        name: "criteria"
+        file: "content/eligibility.json"
+        fields:
+          - { label: "နိဒါန်း", name: "intro", widget: "text" }
+          - label: "အရည်အချင်း သတ်မှတ်ချက်များ"
+            name: "requirements"
+            widget: "list"
+            fields:
+              - { label: "အချက်", name: "text", widget: "string" }
+              - { label: "နမူနာ", name: "is_sample", widget: "boolean", required: false }
+          - label: "ရွေးချယ်ပုံ အဆင့်ဆင့်"
+            name: "steps"
+            widget: "list"
+            fields:
+              - { label: "အဆင့် ခေါင်းစဉ်", name: "title", widget: "string" }
+              - { label: "အသေးစိတ်", name: "text", widget: "text" }
+          - { label: "မှတ်ချက်", name: "note", widget: "text" }

@@ -1,0 +1,76 @@
+{
+  "staff": [
+    {
+      "name": "အမည်",
+      "role": "ကျောင်းအုပ်ကြီး",
+      "department": "",
+      "photo": "",
+      "group": "leadership",
+      "order": 1,
+      "is_sample": true
+    },
+    {
+      "name": "အမည်",
+      "role": "ဒုတိယကျောင်းအုပ်ကြီး",
+      "department": "",
+      "photo": "",
+      "group": "leadership",
+      "order": 2,
+      "is_sample": true
+    },
+    {
+      "name": "ဦးဆန်းထွန်းလင်း",
+      "role": "ညွှန်ကြားရေးမှူး (စီမံ)",
+      "department": "စီမံရေးရာဌာန",
+      "photo": "",
+      "group": "leadership",
+      "order": 3,
+      "is_sample": false
+    },
+    {
+      "name": "အမည်",
+      "role": "ညွှန်ကြားရေးမှူး (လေ့ကျင့်ရေး)",
+      "department": "",
+      "photo": "",
+      "group": "leadership",
+      "order": 4,
+      "is_sample": true
+    },
+    {
+      "name": "အမည်",
+      "role": "ဌာနမှူး",
+      "department": "မြန်မာစာဌာန",
+      "photo": "",
+      "group": "heads",
+      "order": 5,
+      "is_sample": true
+    },
+    {
+      "name": "အမည်",
+      "role": "ဌာနမှူး",
+      "department": "အင်္ဂလိပ်စာဌာန",
+      "photo": "",
+      "group": "heads",
+      "order": 6,
+      "is_sample": true
+    },
+    {
+      "name": "အမည်",
+      "role": "ဌာနမှူး",
+      "department": "သင်္ချာဌာန",
+      "photo": "",
+      "group": "heads",
+      "order": 7,
+      "is_sample": true
+    },
+    {
+      "name": "အမည်",
+      "role": "ဌာနမှူး",
+      "department": "သုတနည်းပညာဌာန",
+      "photo": "",
+      "group": "heads",
+      "order": 8,
+      "is_sample": true
+    }
+  ]
+}
